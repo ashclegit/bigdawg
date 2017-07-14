@@ -40,8 +40,9 @@ public class SStoreMigrationTask {
     
 	/**
 	 * Create a new task for exemplar migration with S-Store.
+	 * @throws ClassNotFoundException 
 	 */
-	public SStoreMigrationTask() {
+	public SStoreMigrationTask() throws ClassNotFoundException {
 		scheduledExecutor = Executors.newScheduledThreadPool(numberOfThreads);
 		cleanHistoricalData();
 		waitForSStore();
@@ -67,7 +68,7 @@ public class SStoreMigrationTask {
 	}
 	
 	
-	public void waitForSStore() {
+	public void waitForSStore() throws ClassNotFoundException {
 		final int sstoreDBID = BigDawgConfigProperties.INSTANCE.getSStoreDBID();
 		try {
 			SStoreSQLConnectionInfo sstoreConnInfo = 
@@ -91,7 +92,7 @@ public class SStoreMigrationTask {
 		return;
 	}
 
-	private void cleanHistoricalData() {
+	private void cleanHistoricalData() throws ClassNotFoundException {
 		// clean the historical data before any migration
     	int psqlDBID = BigDawgConfigProperties.INSTANCE.getSeaflowDBID();
     	PostgreSQLConnectionInfo psqlConnInfo = null;
@@ -130,7 +131,7 @@ class Task implements Runnable {
 	/** log */
 	private static Logger log = Logger.getLogger(Task.class);
 
-    Task(String[] tables){
+    Task(String[] tables) throws ClassNotFoundException{
     	this.tables = tables;
     	try {
 			this.sstoreConnInfo = 

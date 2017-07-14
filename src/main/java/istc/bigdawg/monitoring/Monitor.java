@@ -113,7 +113,7 @@ public class Monitor {
     public static boolean allQueriesDone() {
         PostgreSQLHandler handler = new PostgreSQLHandler();
         try {
-            JdbcQueryResult qresult = handler.executeQueryPostgreSQL(MINDURATION);
+            JdbcQueryResult qresult = handler.executeQueryOnEngine(MINDURATION);
             List<List<String>> rows = qresult.getRows();
             long minDuration = Long.MAX_VALUE;
             for (List<String> row: rows){
@@ -144,7 +144,7 @@ public class Monitor {
         String escapedSignature = signature.toRecoverableString().replace("'", stringSeparator);
 
         PostgreSQLHandler handler = new PostgreSQLHandler();
-        JdbcQueryResult qresult = handler.executeQueryPostgreSQL(String.format(RETRIEVE, escapedSignature));
+        JdbcQueryResult qresult = handler.executeQueryOnEngine(String.format(RETRIEVE, escapedSignature));
         List<List<String>> rows = qresult.getRows();
         for (List<String> row: rows){
             long currentDuration = Long.parseLong(row.get(0));
@@ -167,7 +167,7 @@ public class Monitor {
 
         PostgreSQLHandler handler = new PostgreSQLHandler();
         try {
-            JdbcQueryResult qresult = handler.executeQueryPostgreSQL(SIGS);
+            JdbcQueryResult qresult = handler.executeQueryOnEngine(SIGS);
             List<List<String>> rows = qresult.getRows();for (List<String> row: rows){
                 String signature = row.get(0).replace(stringSeparator, "'");
                 signatures.add(new Signature(signature));
@@ -292,7 +292,7 @@ public class Monitor {
         String fromLoc = ConnectionInfoParser.connectionInfoToString(from);
         String toLoc = ConnectionInfoParser.connectionInfoToString(to);
         PostgreSQLHandler handler = new PostgreSQLHandler();
-        JdbcQueryResult qresult = handler.executeQueryPostgreSQL(String.format(RETRIEVEMIGRATE, fromLoc, toLoc));
+        JdbcQueryResult qresult = handler.executeQueryOnEngine(String.format(RETRIEVEMIGRATE, fromLoc, toLoc));
         List<MigrationStatistics> results = new ArrayList<>();
         List<List<String>> rows = qresult.getRows();
         for (List<String> row: rows){

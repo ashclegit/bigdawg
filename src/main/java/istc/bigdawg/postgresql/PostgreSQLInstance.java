@@ -37,6 +37,7 @@ public enum PostgreSQLInstance {
 
 	public static Connection getConnection() throws SQLException {
 		// https://jdbc.postgresql.org/documentation/head/connect.htlm
+		System.out.println("I am in postgres connection");
 		Properties props = new Properties();
 		props.setProperty("user", USER);
 		props.setProperty("password", PASSWORD);

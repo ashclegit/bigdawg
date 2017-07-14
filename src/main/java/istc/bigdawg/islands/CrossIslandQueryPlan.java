@@ -166,7 +166,7 @@ public class CrossIslandQueryPlan extends DirectedAcyclicGraph<CrossIslandQueryN
 	}
 	
 	private CrossIslandQueryNode createVertex(String name, String rawQueryString, 
-			Scope thisScope, Scope innerScope, Scope outerScope, Set<Integer> catalogSOD) throws BigDawgException {
+			Scope thisScope, Scope innerScope, Scope outerScope, Set<Integer> catalogSOD) throws BigDawgException, ClassNotFoundException {
 		
 		// IDENTIFY ISLAND AND STRIP
 		Matcher islandMatcher	= IslandAndCastResolver.ScopeStartPattern.matcher(rawQueryString);

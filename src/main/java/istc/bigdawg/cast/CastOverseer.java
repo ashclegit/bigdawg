@@ -42,6 +42,7 @@ public class CastOverseer {
 	 * @param connectionInfoMap
 	 * @param tempTableInfo
 	 * @return the object identity, oid, of intermediate result table on remote database
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
 	public static int cast(
@@ -49,7 +50,7 @@ public class CastOverseer {
 			IntraIslandQuery source, 
 			IntraIslandQuery target,
 			Map<CrossIslandQueryNode, ConnectionInfo> connectionInfoMap, 
-			Map<ConnectionInfo, Collection<String>> tempTableInfo) throws CastException {
+			Map<ConnectionInfo, Collection<String>> tempTableInfo) throws CastException, ClassNotFoundException {
 		
 		int sourceDBID = 0;
 		int targetDBID = 0;

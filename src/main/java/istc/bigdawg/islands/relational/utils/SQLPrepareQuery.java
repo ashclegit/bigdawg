@@ -46,7 +46,7 @@ public class SQLPrepareQuery {
 		return "EXPLAIN (VERBOSE ON, ANALYZE, FORMAT XML) " + query;
 	}
 	
-	public static String preprocessDateAndTime(String query) throws SQLException, BigDawgCatalogException {
+	public static String preprocessDateAndTime(String query) throws SQLException, BigDawgCatalogException, ClassNotFoundException {
 		
 		StringBuilder sb = new StringBuilder();
 		

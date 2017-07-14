@@ -17,20 +17,21 @@ import istc.bigdawg.query.ConnectionInfo;
 
 public class CatalogViewer {
 	
-	public static Engine getEngineOfDB(int dbid) throws BigDawgCatalogException, SQLException {
+	public static Engine getEngineOfDB(int dbid) throws BigDawgCatalogException, SQLException, ClassNotFoundException {
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		// input check
 		CatalogUtilities.checkConnection(cc);
-
 		// NEW ADDITION
 		ResultSet rs1 = null;
 		try {
 			rs1 = cc.execRet("select connection_properties from catalog.databases db join catalog.engines e on db.engine_id = e.eid where dbid = "+dbid);
-		
+			
+			
 			if (rs1.next()) {
 				String engineString = rs1.getString("connection_properties");
 				try {
 					return IslandAndCastResolver.getEngineEnum(engineString);
+				
 				} catch (BigDawgException ex) {
 					ex.printStackTrace();
 					throw new BigDawgCatalogException("Unsupported engine: "+ engineString);
@@ -53,13 +54,13 @@ public class CatalogViewer {
 	 * @param db_id
 	 * @return
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static ConnectionInfo getConnectionInfo(int dbid) throws BigDawgCatalogException, SQLException {
+	public static ConnectionInfo getConnectionInfo(int dbid) throws BigDawgCatalogException, SQLException, ClassNotFoundException {
 		
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		Engine e = getEngineOfDB(dbid);
-		
 		return IslandAndCastResolver.getQConnectionInfo(cc, e, dbid);
 	}
 	
@@ -68,9 +69,10 @@ public class CatalogViewer {
 	 * @param cc
 	 * @param inputs
 	 * @return HashMap<Integer, ArrayList<String>>
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static HashMap<Integer, List<String>> getDBMappingByDB (List<String> inputs) throws BigDawgCatalogException, SQLException {
+	public static HashMap<Integer, List<String>> getDBMappingByDB (List<String> inputs) throws BigDawgCatalogException, SQLException, ClassNotFoundException {
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		CatalogUtilities.checkConnection(cc);
 		if (inputs.size() == 0) throw new BigDawgCatalogException("Empty inputs from getDBMapping");
@@ -109,8 +111,9 @@ public class CatalogViewer {
 	 * @return HashMap<String,ArrayList<String>>
 	 * @throws UnsupportedIslandException 
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static HashMap<String,List<String>> getDBMappingByObj (List<String> inputs, Scope scope) throws BigDawgCatalogException, UnsupportedIslandException, SQLException {
+	public static HashMap<String,List<String>> getDBMappingByObj (List<String> inputs, Scope scope) throws BigDawgCatalogException, UnsupportedIslandException, SQLException, ClassNotFoundException {
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		
 		CatalogUtilities.checkConnection(cc);
@@ -161,8 +164,9 @@ public class CatalogViewer {
 	 * @param csvstr
 	 * @return String of TSV String of object names (obj)
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static String getObjectsFromList(String csvstr) throws BigDawgCatalogException, SQLException {
+	public static String getObjectsFromList(String csvstr) throws BigDawgCatalogException, SQLException, ClassNotFoundException {
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		
 		// input check
@@ -230,10 +234,11 @@ public class CatalogViewer {
 	 * @return ArrayList of TSV String of shim_id, island name, engine name and
 	 *         shim access_method
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
 	@Deprecated
-	public static List<String> getAllShims() throws BigDawgCatalogException, SQLException {
+	public static List<String> getAllShims() throws BigDawgCatalogException, SQLException, ClassNotFoundException {
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		// input check
 		CatalogUtilities.checkConnection(cc);

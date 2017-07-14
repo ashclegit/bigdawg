@@ -66,7 +66,7 @@ public class ArraySignatureBuilder {
 		}
 	}
 
-	public static List<String> sig2(String input) throws IOException, BigDawgCatalogException, SQLException {
+	public static List<String> sig2(String input) throws IOException, BigDawgCatalogException, SQLException, ClassNotFoundException {
 		if (objPattern == null) listing();
 		
 		StringBuffer stringBuffer	= new StringBuffer();

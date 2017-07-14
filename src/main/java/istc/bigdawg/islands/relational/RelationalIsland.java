@@ -41,6 +41,9 @@ public class RelationalIsland implements Island {
 				(PostgreSQLConnectionInfo)CatalogViewer.getConnectionInfo(psqlSchemaServerDBID);
 		} catch (SQLException | BigDawgCatalogException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -102,7 +105,7 @@ public class RelationalIsland implements Island {
 	}
 	
 	@Override
-	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException {
+	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException, ClassNotFoundException {
 		try {
 			return CatalogModifier.addObject(tableName, "TEMPORARY", psqlSchemaServerDBID, psqlSchemaServerDBID);
 		} catch (SQLException | BigDawgCatalogException e) {
@@ -111,7 +114,7 @@ public class RelationalIsland implements Island {
 	}
 	
 	@Override
-	public Operator parseQueryAndExtractAllTableNames(String queryString, List<String> tables) throws IslandException {
+	public Operator parseQueryAndExtractAllTableNames(String queryString, List<String> tables) throws IslandException, ClassNotFoundException {
 		SQLQueryPlan relQueryPlan;
 		Operator root;
 		try {

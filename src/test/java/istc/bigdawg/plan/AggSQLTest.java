@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.BasicConfigurator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,12 +14,13 @@ import istc.bigdawg.islands.operators.Operator;
 import istc.bigdawg.islands.relational.SQLPlanParser;
 import istc.bigdawg.islands.relational.SQLQueryPlan;
 import istc.bigdawg.postgresql.PostgreSQLHandler;
+import istc.bigdawg.sqlserver.SQLServerHandler;
 import istc.bigdawg.shims.PostgreSQLQueryGenerator;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.select.Select;
 
-public class AggregateTest {
-
+public class AggSQLTest {
+	
 	private static Map<String, String> inputs;
 	private static Map<String, Map<String, String>> expectedOutputs;
 	private static PostgreSQLHandler psqlh;
@@ -30,8 +30,6 @@ public class AggregateTest {
 		
 		inputs = new HashMap<>();
 		expectedOutputs = new HashMap<>();
-		//System.out.println(getClass().getClassLoader().getResource("logging.properties"));
-		//System.out.println(AggregateTest.class.getClassLoader().getResource("logging.properties"));
 		CatalogInstance.INSTANCE.getCatalog();
 		psqlh = new PostgreSQLHandler(3);
 		
@@ -90,16 +88,16 @@ public class AggregateTest {
 
 	@Test
 	public void testAgg4() {
+		//System.out.println("in test 4");
 		runTestCase("aggTier4");
 	}
 	
 	
 	public void runTestCase(String testname) {
 		try {
-			//BasicConfigurator.configure();
 			SQLQueryPlan qp = SQLPlanParser.extractDirectFromPostgreSQL(psqlh, inputs.get(testname));
 			Operator root = qp.getRootNode();
-			
+			//same generator for SQLServer queries.
 			PostgreSQLQueryGenerator gen = new PostgreSQLQueryGenerator();
 			gen.configure(true, false);
 			gen.setSrcStatement(((Select)CCJSqlParserUtil.parse(inputs.get(testname))));
@@ -118,7 +116,6 @@ public class AggregateTest {
 		}
 		
 	}
-	
 	
 
 }

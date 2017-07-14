@@ -25,6 +25,7 @@ public class Catalog {
 	 * connect(*) to work.
 	 */
 	public Catalog () {
+		System.out.println("in main catalog");
 		initiated = false;
 		connected = false;
 	}

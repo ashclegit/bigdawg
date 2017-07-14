@@ -26,8 +26,11 @@ import istc.bigdawg.scidb.SciDBConnectionInfo;
 import istc.bigdawg.shims.ArrayToSciDBShim;
 import istc.bigdawg.shims.RelationalToPostgresShim;
 import istc.bigdawg.shims.RelationalToSciDBShim;
+import istc.bigdawg.shims.RelationalToSqlServerShim;
+import istc.bigdawg.islands.relational.*;
 import istc.bigdawg.shims.Shim;
 import istc.bigdawg.shims.TextToAccumuloShim;
+import istc.bigdawg.sqlserver.SqlServerConnectionInfo;
 import istc.bigdawg.sstore.SStoreSQLConnectionInfo;
 import istc.bigdawg.sstore.SStoreSQLHandler;
 
@@ -38,14 +41,14 @@ import istc.bigdawg.sstore.SStoreSQLHandler;
  * It is intended to contain all functions that do different things when the island context is different.
  * Island writers should go through each of these functions to add supports for their islands
  * 
- * NOTE: all relational island queries are assumed to be base in PostgreSQL. 
+ * NOTE: all relational island queries are assumed to be base in PostgreSQL and SQLServer. 
  *       This assumption needs to change as new engines join Relational Island 
  *
  */
 public class IslandAndCastResolver {
 	
 	public static enum Engine {
-		PostgreSQL, SciDB, SStore, Accumulo, Myria
+		PostgreSQL, SciDB, SStore, Accumulo, Myria, SQLServer
 	};
 	
 	public enum Scope {
@@ -93,13 +96,15 @@ public class IslandAndCastResolver {
 	 */
 	public static IslandAndCastResolver.Engine getEngineEnum(String engineString) throws BigDawgException {
 		if (engineString.startsWith(IslandAndCastResolver.Engine.PostgreSQL.name()))
-			return IslandAndCastResolver.Engine.PostgreSQL;
+			return IslandAndCastResolver.Engine.PostgreSQL;		
 		else if (engineString.startsWith(IslandAndCastResolver.Engine.SciDB.name()))
 			return IslandAndCastResolver.Engine.SciDB;
 		else if (engineString.startsWith(IslandAndCastResolver.Engine.SStore.name()))
 			return IslandAndCastResolver.Engine.SStore;
 		else if (engineString.startsWith(IslandAndCastResolver.Engine.Accumulo.name()))
 			return IslandAndCastResolver.Engine.Accumulo;
+		else if (engineString.startsWith(IslandAndCastResolver.Engine.SQLServer.name()))
+			return IslandAndCastResolver.Engine.SQLServer;
 		else {
 			throw new BigDawgException("Unsupported engine: "+ engineString);
 		}
@@ -122,13 +127,25 @@ public class IslandAndCastResolver {
 		try {
 			switch (e) {
 			case PostgreSQL:
+				
+				rs2 = cc.execRet("select dbid, eid, host, port, db.name as dbname, userid, password "
+						+ "from catalog.databases db "
+						+ "join catalog.engines e on db.engine_id = e.eid "
+						+ "where dbid = "+dbid);
+				if (rs2.next())					
+					extraction = new PostgreSQLConnectionInfo(rs2.getString("host"), rs2.getString("port"),rs2.getString("dbname"), rs2.getString("userid"), rs2.getString("password"));
+				break;
+			
+			case SQLServer:
 				rs2 = cc.execRet("select dbid, eid, host, port, db.name as dbname, userid, password "
 						+ "from catalog.databases db "
 						+ "join catalog.engines e on db.engine_id = e.eid "
 						+ "where dbid = "+dbid);
 				if (rs2.next())
-					extraction = new PostgreSQLConnectionInfo(rs2.getString("host"), rs2.getString("port"),rs2.getString("dbname"), rs2.getString("userid"), rs2.getString("password"));
+					extraction = new SqlServerConnectionInfo(rs2.getString("host"), rs2.getString("port"),rs2.getString("dbname"), rs2.getString("userid"), rs2.getString("password"));
 				break;
+			
+				
 			case SciDB:
 				rs2 = cc.execRet("select dbid, db.engine_id, host, port, bin_path, userid, password "
 						+ "from catalog.databases db "
@@ -181,8 +198,9 @@ public class IslandAndCastResolver {
 	 * @return Instance of a query generator
 	 * @throws BigDawgException 
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static Shim getShim(Scope scope, int dbid) throws BigDawgException, SQLException {
+	public static Shim getShim(Scope scope, int dbid) throws BigDawgException, SQLException, ClassNotFoundException {
 		
 		IslandAndCastResolver.Engine e = CatalogViewer.getEngineOfDB(dbid);
 		
@@ -209,6 +227,8 @@ public class IslandAndCastResolver {
 				return new RelationalToPostgresShim();
 			case SciDB:
 				return new RelationalToSciDBShim();
+			case SQLServer:
+				return new RelationalToSqlServerShim();
 			default:
 				break;
 			}

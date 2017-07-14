@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import istc.bigdawg.postgresql.PostgreSQLInstance;
+
 /**
  * 
  * @author Jack
@@ -20,22 +22,23 @@ public class CatalogInitiator {
 	 * @param username
 	 * @param password
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void connect (Catalog cc, String url, String username, String password) throws SQLException  {
+	public static void connect (Catalog cc, String url, String username, String password) throws SQLException, ClassNotFoundException  {
 		
 		if (cc.isInitiated()) { 
 			cc.connection.close(); 
 			cc.stmt.close();
 		}
 		//Class.forName("org.postgresql.Driver");
-		cc.connection = DriverManager.getConnection(url, username, password);
-		cc.stmt 	  = cc.connection.createStatement();
-		cc.initiated  = true;
-		cc.connected  = true;
-		cc.connection.setAutoCommit(false);
-		cc.setLastURL(url);
-		cc.setLastUsername(username);
-		cc.setLastPassword(password);
+				cc.connection = DriverManager.getConnection(url, username, password);
+				cc.stmt 	  = cc.connection.createStatement();
+				cc.initiated  = true;
+				cc.connected  = true;
+				cc.connection.setAutoCommit(false);
+				cc.setLastURL(url);
+				cc.setLastUsername(username);
+				cc.setLastPassword(password);
 	}
 	
 	public static void close(Catalog cc) throws SQLException {

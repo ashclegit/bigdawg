@@ -1150,7 +1150,7 @@ public class PostgreSQLQueryGenerator implements OperatorQueryGenerator {
 	 * @param operator
 	 * @throws Exception
 	 */
-	private void postprocessSQLStatement(SQLIslandOperator operator) throws Exception {
+	protected void postprocessSQLStatement(SQLIslandOperator operator) throws Exception {
 
 		// boolean originalPruneStatus = operator.isPruned();
 		// operator.prune(false);

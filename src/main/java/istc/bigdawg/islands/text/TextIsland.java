@@ -44,6 +44,9 @@ public class TextIsland implements Island {
 				(AccumuloConnectionInfo)CatalogViewer.getConnectionInfo(accumuloSchemaServerDBID);
 		} catch (SQLException | BigDawgCatalogException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -110,7 +113,7 @@ public class TextIsland implements Island {
 	}
 
 	@Override
-	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException {
+	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException, ClassNotFoundException {
 		try {
 			return CatalogModifier.addObject(tableName, "TEMPORARY", accumuloSchemaServerDBID, accumuloSchemaServerDBID);
 		} catch (SQLException | BigDawgCatalogException e) {

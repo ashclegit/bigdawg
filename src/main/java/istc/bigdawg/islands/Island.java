@@ -16,9 +16,9 @@ public interface Island {
 	public void setupForQueryPlanning(Set<String> outputChildren, Map<String, String> outputTransitionSchemas) throws IslandException;
 	public void teardownForQueryPlanning(Set<String> outputChildren, Map<String, String> outputTransitionSchemas) throws IslandException;
 	public String getCreateStatementForTransitionTable(String tableName, String attributes);
-	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException;
+	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException, ClassNotFoundException;
 
-	public Operator parseQueryAndExtractAllTableNames(String queryString, List<String> tables) throws IslandException;
+	public Operator parseQueryAndExtractAllTableNames(String queryString, List<String> tables) throws IslandException, ClassNotFoundException;
 	public Set<String> splitJoinPredicate(String predicates) throws IslandException;
 	public Integer getDefaultCastReceptionDBID();
 	public List<String> getLiteralsAndConstantsSignature(String query) throws IslandException;

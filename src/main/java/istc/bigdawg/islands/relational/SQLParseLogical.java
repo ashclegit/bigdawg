@@ -24,7 +24,7 @@ public class SQLParseLogical {
     private SQLQueryPlan queryPlan;
     
 
-	public SQLParseLogical(String query) throws SQLException, BigDawgCatalogException, QueryParsingException {
+	public SQLParseLogical(String query) throws SQLException, BigDawgCatalogException, QueryParsingException, ClassNotFoundException {
 		
 		String q = SQLPrepareQuery.preprocessDateAndTime(query);
 		

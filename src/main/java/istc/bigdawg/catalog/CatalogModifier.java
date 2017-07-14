@@ -204,7 +204,7 @@ public class CatalogModifier {
 		cc.commit();
 	}
 	
-	public static int addObject(String newName, String newFields, int newLogDB, int newPhyDB) throws SQLException, BigDawgCatalogException {
+	public static int addObject(String newName, String newFields, int newLogDB, int newPhyDB) throws SQLException, BigDawgCatalogException, ClassNotFoundException {
 		
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		

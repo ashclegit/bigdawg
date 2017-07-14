@@ -1,3 +1,4 @@
+
 package istc.bigdawg.properties;
 
 import java.io.FileNotFoundException;
@@ -23,6 +24,13 @@ public enum BigDawgConfigProperties {
 	private String postgreSQLTestDatabase;
 	private String postgreSQLTestUser;
 	private String postgreSQLTestPassword;
+	
+	private String SqlServerTestHost;
+	private String SqlServerTestPort;
+	private String SqlServerTestDatabase;
+	private String SqlServerTestUser;
+	private String SqlServerTestPassword;
+	
 
 	private int accumuloSchemaServerDBID;
 	private String accumuloIstanceType;
@@ -100,6 +108,14 @@ public enum BigDawgConfigProperties {
 		this.postgreSQLTestUser = prop.getProperty("main.postgresql.test.user");
 		this.postgreSQLTestPassword = prop
 				.getProperty("main.postgresql.test.password");
+		
+		this.SqlServerTestHost = prop.getProperty("main.SqlServer.test.host");
+		this.SqlServerTestPort = prop.getProperty("main.SqlServer.test.port");
+		this.SqlServerTestDatabase = prop
+						.getProperty("main.SqlServer.test.database");
+		this.SqlServerTestUser = prop.getProperty("main.SqlServer.test.user");
+		this.SqlServerTestPassword = prop
+		.getProperty("main.SqlServer.test.password");
 
 		this.accumuloSchemaServerDBID = Integer
 				.parseInt(prop.getProperty("main.accumulo.dbid.schema"));
@@ -350,6 +366,34 @@ public enum BigDawgConfigProperties {
 	public String getPostgreSQLTestPassword() {
 		return postgreSQLTestPassword;
 	}
+
+	public String getSqlServerTestHost() {
+		return SqlServerTestHost;
+	}
+
+	
+	public String getSqlServerTestPort() {
+		return SqlServerTestPort;
+	}
+
+	
+	public String getSqlServerTestDatabase() {
+		return SqlServerTestDatabase;
+	}
+
+	
+
+	public String getSqlServerTestUser() {
+		return SqlServerTestUser;
+	}
+
+	
+
+	public String getSqlServerTestPassword() {
+		return SqlServerTestPassword;
+	}
+
+	
 
 	/**
 	 * @return the scidbTestHostname

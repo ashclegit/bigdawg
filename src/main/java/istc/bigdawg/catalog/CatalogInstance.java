@@ -28,10 +28,17 @@ public enum CatalogInstance {
 			System.out.println("==>> " + PostgreSQLInstance.PASSWORD);
 			CatalogInitiator.connect(catalog, PostgreSQLInstance.URL, PostgreSQLInstance.USER,
 					PostgreSQLInstance.PASSWORD);
+			/*System.out.println("Connecting to catalog:");
+			System.out.println("==>> " + SqlServerInstance.URL);
+			System.out.println("==>> " + SqlServerInstance.USER);
+			System.out.println("==>> " + SqlServerInstance.PASSWORD);
+			CatalogInitiator.connect(catalog, SqlServerInstance.URL, SqlServerInstance.USER,
+					SqlServerInstance.PASSWORD);*/
+			
 		} catch (Exception e) {
 			String msg = "Catalog initialization failed!";
 			System.err.println(msg);
-			logger.error(msg);
+			//logger.error(msg);
 			e.printStackTrace();
 			System.exit(1);
 		}

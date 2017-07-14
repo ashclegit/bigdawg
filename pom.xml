@@ -48,12 +48,22 @@
 			<version>2.4.3</version>
 		</dependency>
 
+		<!--  SQL Server Client -->
+		<dependency>
+    		<groupId>com.microsoft.sqlserver</groupId>
+    		<artifactId>mssql-jdbc</artifactId>
+    		<version>6.2.0.jre7</version>
+		</dependency>
+		
+		
 		<!-- PostgreSQL client -->
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
+		
+		
 
 		<!-- SQL parsing library -->
 		<dependency>
@@ -461,7 +471,7 @@
 		<filters>
 			<!-- Ensures that the config.properties file is always loaded from the 
 				configuration directory of the active Maven profile. -->
-			<filter>profiles/${build.profile.id}/${build.profile.id}-config.properties</filter>
+			<filter>profiles/dev/dev-config.properties</filter>
 		</filters>
 
 		<plugins>

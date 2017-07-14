@@ -3,3 +3,9 @@ user=postgres
 password=test
 host=bigdawg-postgres-catalog
 port=5400
+
+database=bigdawg_catalog
+user=sqlserver
+password=test
+host=bigdawg-sqlserver-catalog
+port=1400

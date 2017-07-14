@@ -41,6 +41,9 @@ public class ArrayIsland implements Island {
 				(SciDBConnectionInfo)CatalogViewer.getConnectionInfo(scidbSchemaServerDBID);
 		} catch (SQLException | BigDawgCatalogException e) {
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -101,7 +104,7 @@ public class ArrayIsland implements Island {
 	}
 
 	@Override
-	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException {
+	public int addCatalogObjectEntryForTemporaryTable(String tableName) throws IslandException, ClassNotFoundException {
 		try {
 			return CatalogModifier.addObject(tableName, "TEMPORARY", scidbSchemaServerDBID, scidbSchemaServerDBID);
 		} catch (SQLException | BigDawgCatalogException e) {
@@ -110,7 +113,7 @@ public class ArrayIsland implements Island {
 	}
 
 	@Override
-	public Operator parseQueryAndExtractAllTableNames(String queryString, List<String> tables) throws IslandException {
+	public Operator parseQueryAndExtractAllTableNames(String queryString, List<String> tables) throws IslandException, ClassNotFoundException {
 		try {
 			AFLQueryPlan arrayQueryPlan = AFLPlanParser.extractDirect(new SciDBHandler(arraySchemaServerConnectionInfo), queryString);
 			Operator root = arrayQueryPlan.getRootNode();

@@ -1,26 +1,22 @@
 /**
  * 
  */
-package istc.bigdawg.postgresql;
+package istc.bigdawg.sqlserver;
 
-import java.io.Serializable;
 import istc.bigdawg.relational.RelationalSchemaTableName;
 
 /**
- * @author Adam Dziedzic
- * 
- *         Jan 13, 2016 6:39:30 PM
- * 
- *         Deal with the name of a table and schema.
+ * @author akmr
+ * Deal with the name of a table and schema.
  */
-public class PostgreSQLSchemaTableName implements RelationalSchemaTableName {
+public class SQLServerSchemaTableName implements RelationalSchemaTableName {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String DEFAULT_SCHEMA = "public";
+	public static final String DEFAULT_SCHEMA = "test";
 
 	private String schemaName;
 	private String tableName;
@@ -32,9 +28,9 @@ public class PostgreSQLSchemaTableName implements RelationalSchemaTableName {
 	 * If there is a dot (.) in the table name then we divide the name into 2
 	 * parts: - the schema name: before the dot - the table name: after the dot.
 	 * 
-	 * @param tableName
+	 * @param tableNameInitial
 	 */
-	public PostgreSQLSchemaTableName(String tableNameInitial) {
+	public SQLServerSchemaTableName(String tableNameInitial) {
 		this.tableName = tableNameInitial;
 		this.schemaName = DEFAULT_SCHEMA;
 		if (tableNameInitial.contains(".")) {
@@ -53,7 +49,7 @@ public class PostgreSQLSchemaTableName implements RelationalSchemaTableName {
 	 * @param schemaName
 	 * @param tableName
 	 */
-	public PostgreSQLSchemaTableName(String schemaName, String tableName) {
+	public SQLServerSchemaTableName(String schemaName, String tableName) {
 		this.schemaName = schemaName;
 		this.tableName = tableName;
 	}
@@ -77,5 +73,4 @@ public class PostgreSQLSchemaTableName implements RelationalSchemaTableName {
 	public String getFullName() {
 		return schemaName+"."+tableName;
 	}
-
 }

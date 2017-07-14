@@ -72,7 +72,7 @@ public class Dataplacement implements Serializable {
 	
 	private static Logger logger;
 	
-	Dataplacement(Boolean caching) {
+	Dataplacement(Boolean caching) throws ClassNotFoundException {
 		queries.put(Queries.SSTOREQ3, "Query3");
 		queries.put(Queries.POSTGRESQJOINAGG, "SELECT ol_number, SUM(ol_quantity), SUM(ol_amount), SUM(i_price), COUNT(*) " +
 	            		"FROM order_line, item " +
@@ -329,7 +329,7 @@ public class Dataplacement implements Serializable {
 
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		LoggerSetup.setLogging();
 		logger = Logger.getLogger(Main.class);
 		logger.info("Starting application ...");

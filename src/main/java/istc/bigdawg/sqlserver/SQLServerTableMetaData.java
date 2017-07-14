@@ -1,21 +1,18 @@
 /**
  * 
  */
-package istc.bigdawg.postgresql;
-
-import java.util.List;
-import istc.bigdawg.relational.RelationalTableMetaData;
-import java.util.Map;
+package istc.bigdawg.sqlserver;
 
 import istc.bigdawg.database.AttributeMetaData;
-import istc.bigdawg.database.ObjectMetaData;
+import istc.bigdawg.relational.RelationalTableMetaData;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * Meta data about a table in PostgreSQL.
- * 
- * @author Adam Dziedzic
+ * Meta data about a table in MySQL.
  */
-public class PostgreSQLTableMetaData implements RelationalTableMetaData {
+public class SQLServerTableMetaData implements RelationalTableMetaData {
 
 	/**
 	 * 
@@ -23,13 +20,13 @@ public class PostgreSQLTableMetaData implements RelationalTableMetaData {
 	private static final long serialVersionUID = 1L;
 	
 	/** Name of the schema (by default public) and name of the table. */
-	private PostgreSQLSchemaTableName schemaTable;
+	private SQLServerSchemaTableName schemaTable;
 	private Map<String, AttributeMetaData> columnsMap;
 	private List<AttributeMetaData> columnsOrdered;
 
-	public PostgreSQLTableMetaData(PostgreSQLSchemaTableName schemaTable,
-			Map<String, AttributeMetaData> columnsMap,
-			List<AttributeMetaData> columnsOrdered) {
+	public SQLServerTableMetaData(SQLServerSchemaTableName schemaTable,
+                              Map<String, AttributeMetaData> columnsMap,
+                              List<AttributeMetaData> columnsOrdered) {
 		this.schemaTable = schemaTable;
 		this.columnsMap = columnsMap;
 		this.columnsOrdered = columnsOrdered;
@@ -38,7 +35,7 @@ public class PostgreSQLTableMetaData implements RelationalTableMetaData {
 	/**
 	 * @return the schemaTable
 	 */
-	public PostgreSQLSchemaTableName getSchemaTable() {
+	public SQLServerSchemaTableName getSchemaTable() {
 		return schemaTable;
 	}
 

@@ -1,3 +1,4 @@
+
 package istc.bigdawg.islands.relational;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class SQLPlanParser {
 
     
 	// sqlPlan passes in supplement info
-	public SQLPlanParser(String xmlString, SQLQueryPlan sqlPlan, String q) throws SQLException, JSQLParserException, QueryParsingException, BigDawgCatalogException {
+	public SQLPlanParser(String xmlString, SQLQueryPlan sqlPlan, String q) throws SQLException, JSQLParserException, QueryParsingException, BigDawgCatalogException, ClassNotFoundException {
 	   //catalog = DatabaseSingleton.getInstance();
 		
 		String qprocessed = SQLPrepareQuery.preprocessDateAndTime(q);
@@ -126,7 +127,7 @@ public class SQLPlanParser {
 	
 	
 	public static SQLQueryPlan extractDirectFromPostgreSQL(PostgreSQLHandler psqlh, String query) 
-			throws SQLException, JSQLParserException, BigDawgCatalogException, QueryParsingException {
+			throws SQLException, JSQLParserException, BigDawgCatalogException, QueryParsingException, ClassNotFoundException {
 
 		String explainQuery = SQLPrepareQuery.generateExplainQueryString(query);
 		
@@ -137,8 +138,8 @@ public class SQLPlanParser {
 		SQLParseLogical parser = new SQLParseLogical(query);
 		SQLQueryPlan queryPlan = parser.getSQLQueryPlan();
 
-		logger.info(String.format("SQLQueryPlan received query: "+query));
-		logger.info(String.format("SQLQueryPlan generated XMLString: \n\n"+xmlString+"\n"));
+		logger.info("SQLQueryPlan received query: " + query);
+		logger.info("SQLQueryPlan generated XMLString: \n\n" + xmlString + "\n");
 		
 		// run parser
 		@SuppressWarnings("unused")

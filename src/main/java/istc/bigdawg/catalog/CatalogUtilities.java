@@ -9,7 +9,7 @@ import istc.bigdawg.exceptions.BigDawgCatalogException;
 
 public class CatalogUtilities {
 	
-	public static void checkConnection(Catalog cc) throws BigDawgCatalogException, SQLException {
+	public static void checkConnection(Catalog cc) throws BigDawgCatalogException, SQLException, ClassNotFoundException {
 		if (!cc.isInitiated()) 
 			throw new BigDawgCatalogException("[ERROR] BigDAWG: disconnected/uninitialized catalog.");
 		if (!cc.isConnected()) {
@@ -188,7 +188,7 @@ public class CatalogUtilities {
 		return sb.toString();
 	}
 	
-	public static String catalogQueryResult (List<String> parsedResult) throws SQLException, BigDawgCatalogException  {
+	public static String catalogQueryResult (List<String> parsedResult) throws SQLException, BigDawgCatalogException, ClassNotFoundException  {
 		Catalog cc = CatalogInstance.INSTANCE.getCatalog();
 		CatalogUtilities.checkConnection(cc);
 		StringBuilder result = new StringBuilder();
